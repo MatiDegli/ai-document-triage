@@ -8,8 +8,11 @@ dependencies = [
     "compose>=1.6.2",
     "docker>=7.1.0",
     "fastapi[standard]>=0.137.0",
+    "httpx2>=2.4.0",
     "pydantic>=2.13.4",
     "pyright>=1.1.410",
     "pytest>=9.1.0",
     "ruff>=0.15.17",
 ]
+[tool.pytest.ini_options]
+pythonpath = ["."]
