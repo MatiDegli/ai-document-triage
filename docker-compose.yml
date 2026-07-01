@@ -1,0 +1,23 @@
+name: ai-document-triage
+services:
+    backend:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+              - 8000:8000
+    
+    postgres:
+        image: postgres:18.4-alpine3.24
+        environment:
+            POSTGRES_USER: app
+            POSTGRES_PASSWORD: app
+            POSTGRES_DB: app
+        
+        volumes:
+            - postgres_data:/var/lib/postgresql
+        ports:
+            - 5433:5432
+
+volumes:
+    postgres_data:
