@@ -11,3 +11,6 @@ wheels/
 
 # Secrets
 .env
+
+# Temp roadmap
+week_02_postgres_persistence_plan.md
