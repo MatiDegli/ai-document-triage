@@ -58,3 +58,15 @@ def test_get_document_non_existent():
 
     assert response.status_code == 404
     assert response.json() == {"detail": "Document not found"}
+
+
+def test_create_document_rejects_empty_title():
+    response = client.post("/documents", json={"title": "", "content": "Hello"})    
+
+    assert response.status_code == 422
+
+
+def test_create_document_rejects_over_limit_title():
+    response = client.post("/documents", json={"title": "a" * 51, "content": "Hello"})    
+
+    assert response.status_code == 422
