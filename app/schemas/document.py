@@ -1,14 +1,20 @@
+"""Pydantic schemas for document API requests and responses."""
+
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class DocumentCreate(BaseModel):
-    title: str
+    """Payload required to create a document."""
+
+    title: str = Field(min_length=1, max_length=50)
     content: str
 
 
 class DocumentRead(BaseModel):
+    """Public representation of a persisted document."""
+
     id: int
     title: str
     content: str
