@@ -1,9 +1,13 @@
-import dotenv
+from typing import Protocol
 
 from app.models.document import Document
 from app.schemas.analysis import AnalysisOutput
-from openai import OpenAI
 
 
-def analyze(document: Document) -> AnalysisOutput:
-    return ...
+class LLMProvider(Protocol):
+    name: str
+    model: str
+    prompt_version: str
+    schema_version: str
+
+    def analyze(self, document: Document) -> AnalysisOutput: ...
