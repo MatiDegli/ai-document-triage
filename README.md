@@ -1,8 +1,12 @@
 # AI Document Triage
 
-A small didactic project for learning backend and DevOps technologies.
-The application provides a FastAPI API for creating and retrieving documents
-persisted in PostgreSQL.
+`AI Document Triage` is a small FastAPI/PostgreSQL project I'm building while
+working through backend and DevOps fundamentals.
+
+The API currently supports creating, listing, and retrieving documents.
+SQLAlchemy and Alembic handle persistence and migrations, Docker Compose runs
+the local services, and pytest, Ruff, Pyright, and GitHub Actions cover testing
+and CI.
 
 ## Requirements
 
@@ -12,13 +16,15 @@ persisted in PostgreSQL.
 
 ## Setup
 
+Run these commands from the repository root.
+
 Create the local environment file:
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-Add the test database URL to `.env`:
+Set the test database URL in `.env`:
 
 ```env
 TEST_DATABASE_URL=postgresql+psycopg://app:app@localhost:5433/app_test
@@ -62,7 +68,7 @@ uv run alembic upgrade head
 Remove-Item Env:DATABASE_URL
 ```
 
-Run the test suite:
+Run the tests:
 
 ```powershell
 uv run pytest
@@ -78,9 +84,11 @@ uv run pyright
 
 ## API
 
-Interactive documentation: `http://localhost:8000/docs`
+FastAPI provides interactive documentation at:
 
-Available endpoints:
+`http://localhost:8000/docs`
+
+The document endpoints are:
 
 ```text
 GET  /health
@@ -89,7 +97,7 @@ GET  /documents
 GET  /documents/{document_id}
 ```
 
-Example document payload:
+Example request body:
 
 ```json
 {
@@ -100,12 +108,18 @@ Example document payload:
 
 ## Stop the Services
 
+Stop the containers while keeping the PostgreSQL data:
+
 ```powershell
 docker compose down
 ```
 
-The PostgreSQL data is preserved in the named Docker volume. To remove the
-volume as well, use `docker compose down -v`.
+Remove the containers and the PostgreSQL volume when a clean database is
+needed:
 
-More command examples are available in [`docs/commands.md`](docs/commands.md),
-and SQL examples are available in [`docs/sql-notes.md`](docs/sql-notes.md).
+```powershell
+docker compose down -v
+```
+
+The command reference is in [`docs/commands.md`](docs/commands.md). The SQL
+examples are in [`docs/sql-notes.md`](docs/sql-notes.md).
