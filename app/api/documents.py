@@ -1,11 +1,14 @@
 from fastapi import Depends, APIRouter, HTTPException
 from sqlalchemy.orm import Session
 
+from app.api.dependencies import get_llm_provider
 from app.db.session import get_db
+from app.llm.provider import LLMProvider
 from app.models.analysis import Analysis
 from app.models.document import Document
+from app.schemas.analysis import AnalysisRead
 from app.schemas.document import DocumentCreate, DocumentRead
-from app.services.analyses import send_document_to_LLM
+from app.services.analyses import send_document_to_llm
 from app.services.documents import create_document, get_document_by_id, list_documents
 
 
@@ -18,9 +21,16 @@ def post_document(document: DocumentCreate, db: Session = Depends(get_db)) -> Do
     return instance
 
 
-@router.post("/{document_id}/analyze")
-def analyze_document(document_id: int, db:Session = Depends(get_db)) -> Analysis | None:
-    return send_document_to_LLM(db, document_id)
+@router.post("/{document_id}/analyze", response_model=AnalysisRead, status_code=201)
+def analyze_document(
+    document_id: int,
+    db: Session = Depends(get_db),
+    provider: LLMProvider = Depends(get_llm_provider),
+) -> Analysis:
+    analysis = send_document_to_llm(db, document_id, provider=provider)
+    if analysis is None:
+        raise HTTPException(status_code=404, detail="Document not found")
+    return analysis
 
 
 @router.get("", response_model=list[DocumentRead])
