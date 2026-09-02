@@ -1,12 +1,17 @@
 # AI Document Triage
 
-`AI Document Triage` is a small FastAPI/PostgreSQL project I'm building while
-working through backend and DevOps fundamentals.
+AI Document Triage is a backend service for structured document analysis using
+LLM providers.
 
-The API currently supports creating, listing, and retrieving documents.
-SQLAlchemy and Alembic handle persistence and migrations, Docker Compose runs
-the local services, and pytest, Ruff, Pyright, and GitHub Actions cover testing
-and CI.
+The API stores documents in PostgreSQL and sends them to a pluggable provider
+that returns validated analysis results. The current implementation integrates
+DeepSeek for live requests and includes a deterministic mock provider for local
+development and testing.
+
+The service is built around provider abstraction, schema-constrained outputs,
+persistent analysis records, and reproducible local development. It uses
+FastAPI, SQLAlchemy, Alembic, Docker Compose, pytest, Ruff, Pyright, and
+GitHub Actions.
 
 ## Requirements
 
