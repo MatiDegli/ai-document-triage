@@ -46,5 +46,11 @@ def get_analyses_by_document_id(db: Session, document_id: int) -> Sequence[Analy
     return db.scalars(select(Analysis).where(Analysis.document_id == document_id)).all()
 
 
-def get_analyses_by_id(db: Session, analysis_id: int) -> Analysis | None:
+def get_analysis_by_id(db: Session, analysis_id: int) -> Analysis | None:
     return db.get(Analysis, analysis_id)
+
+
+def list_analyses(db: Session) -> list[Analysis]:
+    statement = select(Analysis)
+    result = db.execute(statement)
+    return list(result.scalars().all())

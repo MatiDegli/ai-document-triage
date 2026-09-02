@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.api.analyses import router as analyses_router
 from app.api.documents import router as documents_router
 
 
@@ -19,3 +20,4 @@ def health_check() -> dict[str, str]:
 
 
 app.include_router(documents_router)
+app.include_router(analyses_router)
