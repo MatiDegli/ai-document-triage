@@ -37,7 +37,7 @@ def test_analyze_document(mock_provider: None) -> None:
     assert analysis.provider == "mock"
 
 
-def test_analyze_nonexistant_document() -> None:
+def test_analyze_nonexistant_document(mock_provider: None) -> None:
 
     response = client.post("/documents/999/analyze")
 
