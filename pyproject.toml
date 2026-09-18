@@ -13,7 +13,6 @@ dependencies = [
     "openai>=3.6.0",
     "psycopg[binary]>=3.3.4",
     "pydantic>=2.13.4",
-    "pyright>=1.1.410",
     "pytest>=9.1.0",
     "python-dotenv>=1.2.2",
     "ruff>=0.15.17",
@@ -22,6 +21,15 @@ dependencies = [
 [tool.pytest.ini_options]
 pythonpath = ["."]
 
+# TEMP: Starlette 1.6.0 uses a deprecated AnyIO alias in TestClient.
+# Tracking: https://github.com/MatiDegli/ai-document-triage/issues/1
+# Remove after a Starlette release includes https://github.com/Kludex/starlette/pull/3498.
+filterwarnings = [
+    'ignore:The anyio\.abc\.BlockingPortal alias is deprecated.*:DeprecationWarning:starlette\.testclient',
+]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends"]
 
 [tool.alembic]
 
@@ -42,6 +50,11 @@ script_location = "%(here)s/alembic"
 # additional paths to be prepended to sys.path. defaults to the current working directory.
 prepend_sys_path = [
     "."
+]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.411",
 ]
 
 # timezone to use when rendering the date within the migration file
@@ -106,4 +119,3 @@ prepend_sys_path = [
 # type = "exec"
 # executable = "ruff"
 # options = "check --fix REVISION_SCRIPT_FILENAME"
-
