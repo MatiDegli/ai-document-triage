@@ -3,7 +3,6 @@ from fastapi import FastAPI
 from app.api.analyses import router as analyses_router
 from app.api.documents import router as documents_router
 
-
 app = FastAPI()
 
 

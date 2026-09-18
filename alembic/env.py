@@ -1,14 +1,12 @@
 import os
 from logging.config import fileConfig
 
-from alembic import context
 from dotenv import load_dotenv
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool
 
 import app.models  # noqa: F401  # pyright: ignore[reportUnusedImport]
+from alembic import context
 from app.db.base import Base
-
 
 load_dotenv()
 

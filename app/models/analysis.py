@@ -3,13 +3,15 @@
 from datetime import datetime
 
 from sqlalchemy import (
-    Integer,
-    String,
-    Enum as SQLAlchemyEnum,
+    TIMESTAMP,
     Float,
     ForeignKey,
-    TIMESTAMP,
+    Integer,
+    String,
     func,
+)
+from sqlalchemy import (
+    Enum as SQLAlchemyEnum,
 )
 from sqlalchemy.orm import Mapped, mapped_column
 

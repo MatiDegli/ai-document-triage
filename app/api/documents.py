@@ -1,6 +1,6 @@
-from typing import Sequence
+from collections.abc import Sequence
 
-from fastapi import Depends, APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.api.dependencies import get_llm_provider
@@ -12,7 +12,6 @@ from app.schemas.analysis import AnalysisRead
 from app.schemas.document import DocumentCreate, DocumentRead
 from app.services.analyses import get_analyses_by_document_id, send_document_to_llm
 from app.services.documents import create_document, get_document_by_id, list_documents
-
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
