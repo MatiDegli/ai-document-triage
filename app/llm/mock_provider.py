@@ -3,7 +3,7 @@
 from app.domain.analysis import DocumentCategory
 from app.llm.provider import LLMProvider
 from app.models.document import Document
-from app.schemas.analysis import AnalysisOutput
+from app.schemas.analysis import AnalysisOutput, ProviderResult
 
 
 class MockLLMProvider(LLMProvider):
@@ -14,7 +14,7 @@ class MockLLMProvider(LLMProvider):
     prompt_version = "v1"
     schema_version = "v1"
 
-    def analyze(self, document: Document) -> AnalysisOutput:
+    def analyze(self, document: Document) -> ProviderResult:
         content = document.content
 
         matched_keyword: str | None = None
@@ -58,7 +58,11 @@ class MockLLMProvider(LLMProvider):
         else:
             confidence = 0.9
 
-        instance = AnalysisOutput(
-            summary=summary, category=category, confidence=confidence
+        instance = ProviderResult(
+            output=AnalysisOutput(
+                summary=summary, category=category, confidence=confidence
+            ),
+            input_tokens=None,
+            output_tokens=None,
         )
         return instance

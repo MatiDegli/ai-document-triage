@@ -8,7 +8,7 @@ from openai import OpenAI
 from app.llm.exceptions import ProviderError
 from app.llm.provider import LLMProvider
 from app.models.document import Document
-from app.schemas.analysis import AnalysisOutput
+from app.schemas.analysis import AnalysisOutput, ProviderResult
 
 
 class DeepSeekLLMProvider(LLMProvider):
@@ -24,7 +24,7 @@ class DeepSeekLLMProvider(LLMProvider):
             base_url="https://api.deepseek.com",
         )
 
-    def analyze(self, document: Document) -> AnalysisOutput:
+    def analyze(self, document: Document) -> ProviderResult:
         response = self.client.responses.parse(
             model=self.model,
             instructions="Analyze the document and return structured JSON.",
@@ -38,4 +38,10 @@ class DeepSeekLLMProvider(LLMProvider):
         if output is None:
             raise ProviderError("Provider returned empty content")
 
-        return output
+        usage = response.usage
+
+        return ProviderResult(
+            output=output,
+            input_tokens=usage.input_tokens if usage is not None else None,
+            output_tokens=usage.output_tokens if usage is not None else None,
+        )

@@ -1,8 +1,10 @@
 from fastapi.testclient import TestClient
 
 from app.domain import DocumentCategory
+from app.llm.mock_provider import MockLLMProvider
 from app.main import app
-from app.schemas.analysis import AnalysisRead
+from app.models.document import Document
+from app.schemas.analysis import AnalysisOutput, AnalysisRead, ProviderResult
 
 client = TestClient(app)
 
@@ -92,3 +94,18 @@ def test_get_document_analyses(mock_provider: None) -> None:
         analysis1.id,
         analysis2.id,
     }
+
+
+def test_mock_provider_returns_provider_result() -> None:
+    document = Document(
+        title="Python document",
+        content="Python FastAPI application using PostgreSQL.",
+    )
+
+    result = MockLLMProvider().analyze(document)
+
+    assert isinstance(result, ProviderResult)
+    assert isinstance(result.output, AnalysisOutput)
+    assert result.output.category is DocumentCategory.TECHNICAL
+    assert result.input_tokens is None
+    assert result.output_tokens is None

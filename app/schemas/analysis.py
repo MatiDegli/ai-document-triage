@@ -8,7 +8,7 @@ from app.domain.analysis import DocumentCategory
 
 
 class AnalysisOutput(BaseModel):
-    """Structured output returned by the document analysis provider."""
+    """Main content of the structured output returned by analysis provider."""
 
     summary: str = Field(min_length=1, max_length=2000)
     category: DocumentCategory
@@ -30,3 +30,9 @@ class AnalysisRead(AnalysisOutput):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class ProviderResult(BaseModel):
+    output: AnalysisOutput
+    input_tokens: int | None = Field(default=None, ge=0)
+    output_tokens: int | None = Field(default=None, ge=0)
