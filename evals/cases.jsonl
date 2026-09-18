@@ -1,0 +1,5 @@
+{"id": "technical_001", "document": {"title": "Backend notes", "content": "Python FastAPI application using PostgreSQL."}, "expected_category": "technical"}
+{"id":"financial_001","document":{"title":"Quarterly invoice review","content":"The invoice lists consulting services, tax, payment terms, and a total balance due."},"expected_category":"financial"}
+{"id":"academic_001","document":{"title":"Research methods","content":"This research compares two methods and reports findings from a controlled study."},"expected_category":"academic"}
+{"id":"legal_001","document":{"title":"Court decision summary","content":"The judge reviewed the law and issued a decision about the contract dispute."},"expected_category":"legal"}
+{"id":"general_001","document":{"title":"Office schedule","content":"The team will meet on Tuesday to organize the office schedule and assign tasks."},"expected_category":"general"}
